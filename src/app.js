@@ -5,6 +5,9 @@ const router = express.Router();
 import routes from './routes';
 import { connectDb } from './data-accessor/connectdb';
 import Config from '../config/index';
+import log from './utils/logger';
+
+global.logger = log;
 
 export async function main() {
     app.use(routes(router));

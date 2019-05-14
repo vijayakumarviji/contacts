@@ -7,8 +7,16 @@ const contactController = {
         let apiId = (req.method + req.url).toLowerCase();
         let ApiMessages = Messages[apiId];
         try {
+            logger.log({
+                level: 'info',
+                message: '200 Success',
+            })
             res.send(ApiMessages.RES_SUCCESS);
         } catch (err) {
+            logger.log({
+                level: 'error',
+                message: `${err.responseMessage ? err.responseMessage : err.message}`,
+            })
             next(err);
         }
     }

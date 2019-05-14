@@ -4,5 +4,8 @@ export default {
     },
     SERVER: {
         PORT: process.env.PORT
+    },
+    LOGGER: {
+        FILENAME: 'server.log'
     }
 }

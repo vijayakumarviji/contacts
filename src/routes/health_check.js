@@ -1,6 +1,6 @@
 import contactController from '../controllers/health_check';
 
-const routes = (router)=> {
+const routes = (router) => {
 
     router.get('/health_check', contactController.healthCheck);
 

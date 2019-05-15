@@ -1,0 +1,61 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Contact API Documentation",
+        "description": "Contact API Documentation",
+        "contact": {
+            "name": "Swagger API Team"
+        },
+        "license": {
+            "name": "MIT"
+        }
+    },
+    "host": "localhost:3001",
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/health_check": {
+            "get": {
+                "description": "Health Check",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "pet response",
+                        "schema": {
+                            "$ref": "#/definitions/SuccessModel"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "SuccessModel": {
+            "type": "object",
+            "required": [
+                "responseCode",
+                "responseMessage"
+            ],
+            "properties": {
+                "responseCode": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "responseMessage": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

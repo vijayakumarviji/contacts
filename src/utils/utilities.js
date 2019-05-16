@@ -10,9 +10,10 @@ export const promiseWrapper = promise =>
             data: null
         }));
 
-export const buildResponseMessage = (message, responseCode = 500) => {
+export const buildResponseMessage = (message, responseMessageCode = 'CustomError', responseCode = 500) => {
     return {
         responseCode,
+        responseMessageCode,
         responseMessage: message
     }
 }

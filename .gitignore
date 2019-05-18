@@ -1,5 +1,6 @@
 #code
 node_modules
+server.log
 
 #vscode
 .vscode

@@ -17,7 +17,7 @@ const Phone = new Schema({
 });
 
 const Email = new Schema({
-    email: String,
+    emailId: String,
     tag: {
         type: String,
         required: true,
@@ -28,10 +28,17 @@ const Email = new Schema({
 
 const ContactsSchema = new Schema({
     phone: [Phone],
+    isActive: {
+        type: Boolean,
+        default: true
+    },
     email: [Email],
     lastContacted: Date,
     name: {
-        firstName: String,
+        firstName: {
+            type: String,
+            required: true
+        },
         middleName: String,
         lastName: String
     }

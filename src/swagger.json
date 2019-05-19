@@ -29,9 +29,302 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Health Check"
+                ],
                 "responses": {
                     "200": {
-                        "description": "pet response",
+                        "description": "Health Check response",
+                        "schema": {
+                            "$ref": "#/definitions/SuccessModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/contact": {
+            "post": {
+                "description": "Create New Contact",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Contact"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "data",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/createContactBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create Contact Response",
+                        "schema": {
+                            "$ref": "#/definitions/createContactResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/contact/list": {
+            "post": {
+                "description": "Contact List",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Contact"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "data",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/listContactBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contact List Response",
+                        "schema": {
+                            "$ref": "#/definitions/listContactResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/contact/{_id}": {
+            "get": {
+                "description": "Contact Info",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Contact"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contact Info Response",
+                        "schema": {
+                            "$ref": "#/definitions/getContactResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Contact Info Update",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Contact"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "data",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/updateContactRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contact Info Update Response",
+                        "schema": {
+                            "$ref": "#/definitions/updateContactResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Contact",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Contact"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete Contact",
+                        "schema": {
+                            "$ref": "#/definitions/SuccessModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/group": {
+            "post": {
+                "description": "Create New Group",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Group"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "data",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/createGroupRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create Group Response",
+                        "schema": {
+                            "$ref": "#/definitions/createGroupResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/list": {
+            "post": {
+                "description": "List Group",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Group"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "data",
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/listGroupBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List Group Response",
+                        "schema": {
+                            "$ref": "#/definitions/listGroupResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/{_id}": {
+            "get": {
+                "description": "Get Group Info",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Group"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get Group Info Response",
+                        "schema": {
+                            "$ref": "#/definitions/getGroupResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update Group Info",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Group"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update Group Info Response",
+                        "schema": {
+                            "$ref": "#/definitions/updateGroupResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Group Info",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Group"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete Group Info Response",
                         "schema": {
                             "$ref": "#/definitions/SuccessModel"
                         }
@@ -41,6 +334,138 @@
         }
     },
     "definitions": {
+        "email": {
+            "type": "object",
+            "properties": {
+                "tag": {
+                    "type": "string",
+                    "enum": [
+                        "work",
+                        "personal"
+                    ]
+                },
+                "emailId": {
+                    "type": "string"
+                }
+            }
+        },
+        "emailWithId": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string",
+                    "enum": [
+                        "work",
+                        "personal"
+                    ]
+                },
+                "emailId": {
+                    "type": "string"
+                }
+            }
+        },
+        "phone": {
+            "type": "object",
+            "properties": {
+                "tag": {
+                    "type": "string",
+                    "enum": [
+                        "work",
+                        "personal"
+                    ]
+                },
+                "emailId": {
+                    "type": "string"
+                }
+            }
+        },
+        "phoneWithId": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string",
+                    "enum": [
+                        "work",
+                        "personal"
+                    ]
+                },
+                "phoneNo": {
+                    "type": "string"
+                }
+            }
+        },
+        "name": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string",
+                    "required": true
+                },
+                "middleName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                }
+            }
+        },
+        "contactInfo": {
+            "type": "object",
+            "properties": {
+                "isActive": {
+                    "type": "boolean"
+                },
+                "_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "$ref": "#/definitions/name"
+                },
+                "phone": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/phoneWithId"
+                    }
+                },
+                "email": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/emailWithId"
+                    }
+                }
+            }
+        },
+        "groupInfo": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "contactsList": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "_id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "$ref": "#/definitions/name"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "SuccessModel": {
             "type": "object",
             "required": [
@@ -49,11 +474,322 @@
             ],
             "properties": {
                 "responseCode": {
-                    "type": "integer",
-                    "format": "int32"
+                    "type": "integer"
+                },
+                "responseMessageCode": {
+                    "type": "string"
                 },
                 "responseMessage": {
                     "type": "string"
+                }
+            }
+        },
+        "createContactBody": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "$ref": "#/definitions/name"
+                },
+                "phone": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/phone"
+                    }
+                },
+                "email": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/email"
+                    }
+                }
+            }
+        },
+        "createContactResponse": {
+            "type": "object",
+            "properties": {
+                "responseCode": {
+                    "type": "integer"
+                },
+                "responseMessageCode": {
+                    "type": "string"
+                },
+                "responseMessage": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "contactInfo": {
+                            "$ref": "#/definitions/contactInfo"
+                        }
+                    }
+                }
+            }
+        },
+        "listContactBody": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "limit": {
+                    "type": "integer",
+                    "default": 10
+                },
+                "searchValue": {
+                    "type": "string"
+                }
+            }
+        },
+        "listContactResponse": {
+            "type": "object",
+            "properties": {
+                "responseCode": {
+                    "type": "integer"
+                },
+                "responseMessageCode": {
+                    "type": "string"
+                },
+                "responseMessage": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "contactList": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/contactInfo"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "getContactResponse": {
+            "type": "object",
+            "properties": {
+                "responseCode": {
+                    "type": "integer"
+                },
+                "responseMessageCode": {
+                    "type": "string"
+                },
+                "responseMessage": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "contactInfo": {
+                            "$ref": "#/definitions/contactInfo"
+                        }
+                    }
+                }
+            }
+        },
+        "updateContactRequestBody": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "$ref": "#/definitions/name"
+                },
+                "phone": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "_id": {
+                                "type": "string"
+                            },
+                            "tag": {
+                                "type": "string",
+                                "enum": [
+                                    "work",
+                                    "personal"
+                                ]
+                            },
+                            "phoneNo": {
+                                "type": "string"
+                            },
+                            "isDeleted": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                },
+                "email": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "_id": {
+                                "type": "string"
+                            },
+                            "tag": {
+                                "type": "string",
+                                "enum": [
+                                    "work",
+                                    "personal"
+                                ]
+                            },
+                            "emailId": {
+                                "type": "string"
+                            },
+                            "isDeleted": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "updateContactResponse": {
+            "type": "object",
+            "properties": {
+                "responseCode": {
+                    "type": "integer"
+                },
+                "responseMessageCode": {
+                    "type": "string"
+                },
+                "responseMessage": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "contactInfo": {
+                            "$ref": "#/definitions/contactInfo"
+                        }
+                    }
+                }
+            }
+        },
+        "createGroupRequestBody": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "contactsList": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "_id": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "createGroupResponse": {
+            "type": "object",
+            "properties": {
+                "responseCode": {
+                    "type": "integer"
+                },
+                "responseMessageCode": {
+                    "type": "string"
+                },
+                "responseMessage": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "groupInfo": {
+                            "$ref": "#/definitions/groupInfo"
+                        }
+                    }
+                }
+            }
+        },
+        "listGroupBody": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "limit": {
+                    "type": "integer",
+                    "default": 10
+                },
+                "searchValue": {
+                    "type": "string"
+                }
+            }
+        },
+        "listGroupResponse": {
+            "type": "object",
+            "properties": {
+                "responseCode": {
+                    "type": "integer"
+                },
+                "responseMessageCode": {
+                    "type": "string"
+                },
+                "responseMessage": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "groupList": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/groupInfo"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "getGroupResponse": {
+            "type": "object",
+            "properties": {
+                "responseCode": {
+                    "type": "integer"
+                },
+                "responseMessageCode": {
+                    "type": "string"
+                },
+                "responseMessage": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "groupInfo": {
+                            "$ref": "#/definitions/groupInfo"
+                        }
+                    }
+                }
+            }
+        },
+        "updateGroupResponse": {
+            "type": "object",
+            "properties": {
+                "responseCode": {
+                    "type": "integer"
+                },
+                "responseMessageCode": {
+                    "type": "string"
+                },
+                "responseMessage": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "groupInfo": {
+                            "$ref": "#/definitions/groupInfo"
+                        }
+                    }
                 }
             }
         }

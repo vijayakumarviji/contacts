@@ -48,9 +48,26 @@ const contactsAccessor = {
             reject(err);
         }
     }),
+    countContact: (data = {}) => new Promise(async (resolve, reject) => {
+        try {
+            let criteria = {
+                isActive: data.isActive || true
+            };
+            if (data.searchValue)
+                criteria = buildSearchQuery(data.searchValue);
+            let result = await ContactsModel.countDocuments(criteria);
+            resolve(result)
+        } catch (err) {
+            logger.log({
+                level: 'error',
+                message: `contactsAccessor-countContact-${err.message}`,
+            })
+            reject(err);
+        }
+    }),
     viewContact: (_id) => new Promise(async (resolve, reject) => {
         try {
-            let result = await ContactsModel.findById(_id);
+            let result = await ContactsModel.findOne({ _id, isActive: true });
             logger.log({
                 level: 'info',
                 message: 'contactsAccessor-viewContact-Success',
@@ -66,7 +83,102 @@ const contactsAccessor = {
     }),
     editContact: (_id, data) => new Promise(async (resolve, reject) => {
         try {
-            let result = await ContactsModel.findByIdAndUpdate(_id, data, { new: true });
+            let editedEmail, editedphone, doUpdate = false;;
+            let criteria = {
+                _id
+            };
+
+            const updateData = {
+            };
+            if (data.name) {
+                doUpdate = true;
+                updateData.name = data.name;
+            }
+            if (data.email) {
+                let addedItems = getAddedItems(data.email);
+                if (addedItems.lineItems && addedItems.lineItems.length) {
+                    doUpdate = true;
+                    updateData['$push'] = updateData['$push'] || {};
+                    updateData['$push'].email = {
+                        $each: addedItems.lineItems
+                    };
+                }
+            }
+            if (data.phone) {
+                let addedItems = getAddedItems(data.phone);
+                if (addedItems.lineItems && addedItems.lineItems.length) {
+                    doUpdate = true;
+                    updateData['$push'] = updateData['$push'] || {};
+                    updateData['$push'].phone = {
+                        '$each': addedItems.lineItems
+                    };
+                }
+            } 
+            let result = {};
+            if (doUpdate) {
+                result = await ContactsModel.updateOne(criteria, updateData, { new: true });
+                delete updateData['$push']
+            }
+
+            if (data.email) {
+                let deletedItems = getDeletedItems(data.email);
+                if (deletedItems._ids && deletedItems._ids.length) {
+                    doUpdate = true;
+                    updateData['$pull'] = updateData['$pull'] || {};
+                    updateData['$pull'].email = {
+                        _id: {
+                            $in: deletedItems._ids
+                        }
+                    };
+                }
+            }
+            if (data.phone) {
+                let deletedItems = getDeletedItems(data.phone);
+                if (deletedItems._ids && deletedItems._ids.length) {
+                    doUpdate = true;
+                    updateData['$pull'] = updateData['$pull'] || {};
+                    updateData['$pull'].phone = {
+                        _id: {
+                            $in: deletedItems._ids
+                        }
+                    };
+                }
+            }
+            if (doUpdate)
+                result = await ContactsModel.updateOne(criteria, updateData, { new: true });
+            
+            if(data.email) {
+                let editedItems = getEditedItems(data.email);
+                _.each(editedItems.lineItems, async (lineItem)=>{
+                    let criteria = {
+                        _id,
+                        email: {
+                            $elemMatch: {
+                                _id: lineItem._id
+                            }
+                        }
+                    };
+        
+                    const updateData = { $set: { "email.$" : lineItem } };
+                    result = await ContactsModel.updateOne(criteria, updateData, { new: true });
+                })
+            }
+            if(data.phone) {
+                let editedItems = getEditedItems(data.phone);
+                _.each(editedItems.lineItems, async (lineItem)=>{
+                    let criteria = {
+                        _id,
+                        phone: {
+                            $elemMatch: {
+                                _id: lineItem._id
+                            }
+                        }
+                    };
+        
+                    const updateData = { $set: { "phone.$" : lineItem } };
+                    result = await ContactsModel.updateOne(criteria, updateData, { new: true });
+                })
+            }
             logger.log({
                 level: 'info',
                 message: 'contactsAccessor-editContact-Success',
@@ -74,6 +186,7 @@ const contactsAccessor = {
             resolve(result);
         }
         catch (err) {
+            console.log(err)
             logger.log({
                 level: 'error',
                 message: `contactsAccessor-editContact-${err.message}`,
@@ -138,6 +251,32 @@ const buildSearchQuery = (searchValue) => {
         }
     })
     return { '$or': criteria };
+};
+
+const getAddedItems = (data) => {
+    let lineItems = _.filter(data, function (lineItem) {
+        return (!lineItem.isDeleted && !lineItem._id);
+    });
+    return {
+        lineItems
+    }
+}
+const getEditedItems = (data) => {
+    let lineItems = _.filter(data, function (lineItem) {
+        return (!lineItem.isDeleted && lineItem._id);
+    });
+    return {
+        _ids: _.map(lineItems, '_id'),
+        lineItems
+    }
+}
+const getDeletedItems = (data) => {
+    let lineItems = _.filter(data, function (lineItem) {
+        return lineItem.isDeleted;
+    });
+    return {
+        _ids: _.map(lineItems, '_id')
+    }
 }
 
 export default contactsAccessor;

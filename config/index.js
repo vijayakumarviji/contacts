@@ -6,6 +6,6 @@ export default {
         PORT: process.env.PORT
     },
     LOGGER: {
-        FILENAME: 'server.log'
+        FILENAME: process.env.LOGGER_FILENAME
     }
 }

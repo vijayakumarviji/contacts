@@ -56,14 +56,20 @@ const SchemaValidateMiddleWare = {
                 const schema = _.get(Schemas, schemaPath);
                 try {
                     let validatedResponse = req.result;
+                    let isError = validatedResponse.isError;
                     if (schema.response)
                         validatedResponse = await validate({ result: JSON.parse(JSON.stringify(req.result)) }, 'result', schema.response, validateOptions, 'Response');
+                    if (isError)
+                        throw validatedResponse;
                     res.send(validatedResponse);
                 } catch (err) {
+                    logger.log({
+                        level: 'error',
+                        message: `SchemaValidateMiddleWare-responseSchemaValidator-${err.message}`,
+                    })
                     res.status(err.responseCode).json(err)
                 }
             } else {
-                console.log(req.result)
                 res.send(req.result);
             }
         }

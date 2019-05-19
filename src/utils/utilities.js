@@ -12,6 +12,7 @@ export const promiseWrapper = promise =>
 
 export const buildResponseMessage = (message, responseMessageCode = 'CustomError', responseCode = 500) => {
     return {
+        isError: responseCode > 399 ? true : false,
         responseCode,
         responseMessageCode,
         responseMessage: message

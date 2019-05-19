@@ -14,6 +14,7 @@ import log from './utils/logger';
 global.logger = log;
 
 export async function main() {
+    try {
     // Adding Body Parser
     app.use(bodyParser.json());
     // Adding Api Documentation
@@ -24,4 +25,11 @@ export async function main() {
     await connectDb();
     app.listen(Config.SERVER.PORT, () => console.log(`App listening on port ${Config.SERVER.PORT}`));
     return {};
+    }
+    catch(err){
+        logger.log({
+            level: 'error',
+            message: `app-main-${err.message}`,
+        })
+    }
 }

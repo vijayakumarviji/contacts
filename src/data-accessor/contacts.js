@@ -1,5 +1,8 @@
-import ContactsModel from '../models/contacts';
 import _ from 'lodash';
+
+import { getAddedItems, getEditedItems, getDeletedItems } from './common';
+import ContactsModel from '../models/contacts';
+
 
 const contactsAccessor = {
     createContact: (data) => new Promise(async (resolve, reject) => {
@@ -83,7 +86,7 @@ const contactsAccessor = {
     }),
     editContact: (_id, data) => new Promise(async (resolve, reject) => {
         try {
-            let editedEmail, editedphone, doUpdate = false;;
+            let doUpdate = false;;
             let criteria = {
                 _id
             };
@@ -186,7 +189,6 @@ const contactsAccessor = {
             resolve(result);
         }
         catch (err) {
-            console.log(err)
             logger.log({
                 level: 'error',
                 message: `contactsAccessor-editContact-${err.message}`,
@@ -252,31 +254,5 @@ const buildSearchQuery = (searchValue) => {
     })
     return { '$or': criteria };
 };
-
-const getAddedItems = (data) => {
-    let lineItems = _.filter(data, function (lineItem) {
-        return (!lineItem.isDeleted && !lineItem._id);
-    });
-    return {
-        lineItems
-    }
-}
-const getEditedItems = (data) => {
-    let lineItems = _.filter(data, function (lineItem) {
-        return (!lineItem.isDeleted && lineItem._id);
-    });
-    return {
-        _ids: _.map(lineItems, '_id'),
-        lineItems
-    }
-}
-const getDeletedItems = (data) => {
-    let lineItems = _.filter(data, function (lineItem) {
-        return lineItem.isDeleted;
-    });
-    return {
-        _ids: _.map(lineItems, '_id')
-    }
-}
 
 export default contactsAccessor;

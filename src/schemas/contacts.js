@@ -8,7 +8,7 @@ const tag = joi.string()
     .default(Constants.SchemaUtils.TypeEnum.WORK)
     .valid(Constants.SchemaUtils.TypeEnum.WORK, Constants.SchemaUtils.TypeEnum.PERSONAL);
 
-const name = joi.object().keys({
+export const name = joi.object().keys({
     firstName: joi.string().required(),
     middleName: joi.string(),
     lastName: joi.string()

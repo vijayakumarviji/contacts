@@ -5,7 +5,11 @@ import {
 
 const GroupSchema = new Schema({
     name: String,
-    ContactsList: [{
+    isActive: {
+        type: Boolean,
+        default: true
+    },
+    contactsList: [{
         type: Schema.Types.ObjectId,
         ref: 'Contacts'
     }]

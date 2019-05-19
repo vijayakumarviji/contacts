@@ -1,5 +1,6 @@
 import express from 'express';
-const swaggerUi = require('swagger-ui-express');
+import swaggerUi from'swagger-ui-express';
+import bodyParser from 'body-parser';
 
 const app = express();
 const router = express.Router();
@@ -13,6 +14,8 @@ import log from './utils/logger';
 global.logger = log;
 
 export async function main() {
+    // Adding Body Parser
+    app.use(bodyParser.json());
     // Adding Api Documentation
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     // Adding Routes
